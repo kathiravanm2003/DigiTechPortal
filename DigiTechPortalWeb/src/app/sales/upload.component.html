@@ -1,4 +1,18 @@
-﻿<h1>Users</h1>
-<a routerLink="add" class="btn btn-sm btn-success mb-2">Add User</a>
+﻿<h1>Sales</h1>
 
-<input type="file" (change)="onFileSelected($event)" #fileInput>
+<div class="card">
+    <h4 class="card-header">Sales DataSet Upload</h4>
+    <div class="card-body">
+        <div class="mb-3">
+            <label class="form-label">Upload File</label>
+            <input type="file" (change)="onFileSelected($event)" #fileInput>                
+        </div>            
+        <div>
+            <button [disabled]="loading" class="btn btn-primary" (click)="onSubmit()">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                Browse
+            </button>
+            <a routerLink="../login" class="btn btn-link">Cancel</a>
+        </div>
+    </div>
+</div>
