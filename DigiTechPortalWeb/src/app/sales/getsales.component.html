@@ -1,0 +1,25 @@
+﻿<h1>Sales</h1>
+
+<div class="container mt-5">
+  
+    <h2>Sales for 2021 from input data</h2>
+    
+    <table class="table table-striped">
+      <thead>
+          <tr>
+            <th>Date</th>
+            <th>Region</th>
+            <th>Sales</th>
+            <th>Profit</th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sale of sales">
+          <td>{{ sale.Date }}</td>
+          <td>{{ sale.Region }}</td>
+          <td>{{ sale.Sales }}</td>
+          <td>{{ sale.Profit }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

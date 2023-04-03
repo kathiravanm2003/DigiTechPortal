@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
 import { User } from '@app/_models';
+import { SalesModel } from '@app/sales/sales.model';
 
 @Injectable({ providedIn: 'root' })
 export class SalesService {
@@ -25,5 +26,10 @@ export class SalesService {
             (response) => console.log(response),
             (error) => console.log(error)
         );
+    }
+
+    getSales()
+    {
+        return this.http.get<SalesModel[]>('http://127.0.0.1:5000/getsales');
     }
 }

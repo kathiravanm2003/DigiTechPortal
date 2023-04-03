@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { SalesRoutingModule } from './sales-routing.module';
 import { LayoutComponent } from './layout.component';
 import { UploadComponent } from './upload.component';
+import { GetSalesComponent } from './getsales.component';
 
 @NgModule({
     imports: [
@@ -14,7 +15,8 @@ import { UploadComponent } from './upload.component';
     ],
     declarations: [
         LayoutComponent,
-        UploadComponent
+        UploadComponent,
+        GetSalesComponent
     ]
 })
 export class SalesModule { }
