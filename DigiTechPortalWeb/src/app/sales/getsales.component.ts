@@ -35,7 +35,7 @@ export class GetSalesComponent implements OnInit {
                 this.histogramUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
             });
 
-            this.salesService.getsaleslinechart()
+        this.salesService.getsaleslinechart()
             .subscribe((blob: Blob) => {
                 this.linechartUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
             });
