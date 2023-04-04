@@ -1,7 +1,5 @@
 ﻿import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import * as $ from 'jquery';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -17,7 +15,6 @@ export class GetSalesComponent implements OnInit {
     linechartUrl?: any;
 
     constructor(
-        private http: HttpClient,
         private salesService: SalesService,
         private sanitizer: DomSanitizer
     ) {
