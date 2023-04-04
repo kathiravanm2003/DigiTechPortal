@@ -12,6 +12,7 @@ import { SalesModel } from '@app/sales/sales.model';
 export class SalesService {
     private userSubject: BehaviorSubject<User | null>;
     public user: Observable<User | null>;
+    flaskAPI?: string;
 
     constructor(
         private router: Router,
@@ -19,10 +20,11 @@ export class SalesService {
     ) {
         this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user')!));
         this.user = this.userSubject.asObservable();
+        this.flaskAPI = 'http://localhost:5000';
     }
 
     uploadFile(formData: FormData) {
-        this.http.post('http://localhost:5000/upload', formData).subscribe(
+        this.http.post(`${this.flaskAPI}/upload`, formData).subscribe(
             (response) => console.log(response),
             (error) => console.log(error)
         );
@@ -30,21 +32,21 @@ export class SalesService {
 
     getSales()
     {
-        return this.http.get<SalesModel[]>('http://127.0.0.1:5000/getsales');
+        return this.http.get<SalesModel[]>(`${this.flaskAPI}/getsales`);
     }
 
     getcleansales()
     {
-        return this.http.get<SalesModel[]>('http://127.0.0.1:5000/getcleansales');
+        return this.http.get<SalesModel[]>(`${this.flaskAPI}/getcleansales`);
     }
 
     getsaleshistogram()
     {
-        return this.http.get('http://127.0.0.1:5000/getsaleshistogram', { responseType: 'blob' });
+        return this.http.get(`${this.flaskAPI}/getsaleshistogram`, { responseType: 'blob' });
     }
 
     getsaleslinechart()
     {
-        return this.http.get('http://127.0.0.1:5000/getsaleslinechart', { responseType: 'blob' });
+        return this.http.get(`${this.flaskAPI}/getsaleslinechart`, { responseType: 'blob' });
     }
 }
