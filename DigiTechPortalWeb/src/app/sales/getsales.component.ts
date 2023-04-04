@@ -33,12 +33,12 @@ export class GetSalesComponent implements OnInit {
             .pipe(first())
             .subscribe(salesC => this.salesC = salesC);
 
-        this.http.get('http://127.0.0.1:5000/getsaleshistogram', { responseType: 'blob' })
+        this.salesService.getsaleshistogram()
             .subscribe((blob: Blob) => {
                 this.histogramUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
             });
 
-        this.http.get('http://127.0.0.1:5000/getsaleslinechart', { responseType: 'blob' })
+            this.salesService.getsaleslinechart()
             .subscribe((blob: Blob) => {
                 this.linechartUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
             });
