@@ -9,6 +9,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import threading
+import time
 
 app = Flask(__name__)
 CORS(app)
@@ -117,6 +118,7 @@ def getsaleshistogram():
 
 @app.route('/getsaleslinechart')
 def getsaleslinechart():
+    time.sleep(2)
     bufL = plot_linechart()
     return Response(bufL.read(), content_type='image/png')
     
