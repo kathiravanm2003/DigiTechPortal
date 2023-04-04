@@ -32,4 +32,19 @@ export class SalesService {
     {
         return this.http.get<SalesModel[]>('http://127.0.0.1:5000/getsales');
     }
+
+    getcleansales()
+    {
+        return this.http.get<SalesModel[]>('http://127.0.0.1:5000/getcleansales');
+    }
+
+    getsaleshistogram()
+    {
+        return this.http.get('http://127.0.0.1:5000/getsaleshistogram', { responseType: 'blob' });
+    }
+
+    getsaleslinechart()
+    {
+        return this.http.get('http://127.0.0.1:5000/getsaleslinechart', { responseType: 'blob' });
+    }
 }
