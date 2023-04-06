@@ -3,7 +3,6 @@ import io
 from flask import Flask, render_template, request, Response, send_file
 from flask_cors import CORS
 import pandas as pd
-# import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 import matplotlib
 matplotlib.use('Agg')
@@ -91,8 +90,8 @@ def contact():
 
 @app.route('/getsales')
 def getsales():
-    # 1. Loading the data
-    
+
+    # 1. Loading the data    
     # Load the data from a CSV file
     sales_data = pd.read_csv('./content/sales2.csv')
     return sales_data.to_json(orient='records')
@@ -118,6 +117,7 @@ def getsaleshistogram():
 
 @app.route('/getsaleslinechart')
 def getsaleslinechart():
+    
     time.sleep(2)
     bufL = plot_linechart()
     return Response(bufL.read(), content_type='image/png')
