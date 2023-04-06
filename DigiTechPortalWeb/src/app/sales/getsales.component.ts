@@ -13,15 +13,24 @@ export class GetSalesComponent implements OnInit {
     salesC?: SalesModel[];
     histogramUrl?: any;
     linechartUrl?: any;
+    salespredictUrl?: any;
+    loading = false;
+
+    startDate: Date;
+    endDate: Date;
 
     constructor(
         private salesService: SalesService,
         private sanitizer: DomSanitizer
     ) {
-
+        this.startDate = new Date();
+        this.endDate = new Date();
     }
 
-    ngOnInit() {
+    getAllSalesData() {
+
+        this.loading = true;
+
         this.salesService.getSales()
             .pipe(first())
             .subscribe(sales => this.sales = sales);
@@ -39,6 +48,17 @@ export class GetSalesComponent implements OnInit {
             .subscribe((blob: Blob) => {
                 this.linechartUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
             });
+
+        this.salesService.getsalesprediction(this.startDate.toString(), this.endDate.toString())
+            .subscribe((blob: Blob) => {
+                this.salespredictUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
+            });
+
+        this.loading = false;
+    }
+
+    ngOnInit() {
+
     }
 
     // ngAfterViewInit() {

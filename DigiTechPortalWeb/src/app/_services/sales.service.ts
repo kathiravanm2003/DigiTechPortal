@@ -30,23 +30,31 @@ export class SalesService {
         );
     }
 
-    getSales()
-    {
+    getSales() {
         return this.http.get<SalesModel[]>(`${this.flaskAPI}/getsales`);
     }
 
-    getcleansales()
-    {
+    getcleansales() {
         return this.http.get<SalesModel[]>(`${this.flaskAPI}/getcleansales`);
     }
 
-    getsaleshistogram()
-    {
+    getsaleshistogram() {
         return this.http.get(`${this.flaskAPI}/getsaleshistogram`, { responseType: 'blob' });
     }
 
-    getsaleslinechart()
-    {
+    getsaleslinechart() {
         return this.http.get(`${this.flaskAPI}/getsaleslinechart`, { responseType: 'blob' });
+    }
+
+    getsalesprediction(startDate: string, endDate: string) {
+        return this.http.get(`${this.flaskAPI}/getsalesprediction`,
+            {
+                params:
+                {
+                    'startdate': startDate,
+                    'enddate': endDate
+                },
+                responseType: 'blob'
+            });
     }
 }

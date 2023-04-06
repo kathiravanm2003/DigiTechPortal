@@ -4,6 +4,23 @@
     <div class="row">
         <div class="col-sm">
             <div class="card">
+                <h4 class="card-header">Input Date Range</h4>
+                <div class="card-body">
+                    <label for="start-date">Start Date:</label>
+                    <input type="date" id="start-date" name="start-date" [(ngModel)]="startDate">
+                    <label for="end-date">End Date:</label>
+                    <input type="date" id="end-date" name="end-date" [(ngModel)]="endDate">
+                    <button [disabled]="loading" class="btn btn-primary" (click)="getAllSalesData()">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <div class="card">
                 <h4 class="card-header">Sales data from input</h4>
                 <div class="card-body">
                     <table class="table table-striped">
@@ -67,6 +84,16 @@
                 <h4 class="card-header">Sales Line Chart</h4>
                 <div class="card-body">
                     <img [src]="linechartUrl">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+            <div class="card">
+                <h4 class="card-header">Sales Prediction</h4>
+                <div class="card-body">
+                    <img [src]="salespredictUrl">
                 </div>
             </div>
         </div>
