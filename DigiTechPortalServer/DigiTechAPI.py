@@ -1,6 +1,6 @@
 import os
 import io
-from flask import Flask, render_template, request, Response, send_file, jsonify
+from flask import Flask, render_template, request, Response, send_file, jsonify, session
 from flask_cors import CORS
 import pandas as pd
 from sklearn.linear_model import LinearRegression
@@ -12,13 +12,14 @@ import time
 import numpy as np
 
 app = Flask(__name__)
+app.secret_key = 'digitech_secret_key'
 CORS(app)
 
-def predict_sales(start_dt, end_dt) :
+def predict_sales(start_dt, end_dt, fileName) :
     # 6. Sales Prediction
 
     # Load data from CSV file
-    sales_data = pd.read_csv('./content/sales2.csv')
+    sales_data = pd.read_csv('./uploads/' + str(fileName))
 
     # Convert the date column to datetime format
     sales_data['Date'] = pd.to_datetime(sales_data['Date'])
@@ -91,10 +92,10 @@ def predict_sales(start_dt, end_dt) :
 
     return bufP
 
-def plot_histogram():
+def plot_histogram(fileName):
 
     # 2. Data cleaning and pre-processing:
-    sales_data = pd.read_csv('./content/sales2.csv')
+    sales_data = pd.read_csv('./uploads/' + str(fileName))
     # Handling missing values
     sales_data = sales_data.dropna()
 
@@ -118,9 +119,9 @@ def plot_histogram():
 
     return bufH
 
-def plot_linechart():
+def plot_linechart(fileName):
     # 2. Data cleaning and pre-processing:
-    sales_data = pd.read_csv('./content/sales2.csv')
+    sales_data = pd.read_csv('./uploads/' + str(fileName))
     # Handling missing values
     sales_data = sales_data.dropna()
 
@@ -162,14 +163,16 @@ def getsales():
 
     # 1. Loading the data    
     # Load the data from a CSV file
-    sales_data = pd.read_csv('./content/sales2.csv')
+    fileName = session.get('fileName')
+    sales_data = pd.read_csv("./uploads/" + 'sales2.csv')
     return Response(sales_data.to_json(orient='records'), content_type='application/json')
 
 @app.route('/getcleansales')
 def getcleansales():
     
     # 2. Data cleaning and pre-processing:
-    sales_data = pd.read_csv('./content/sales2.csv')
+    fileName = session.get('fileName')
+    sales_data = pd.read_csv('./uploads/' + 'sales2.csv')
     # Handling missing values
     sales_data = sales_data.dropna()
 
@@ -180,15 +183,16 @@ def getcleansales():
 
 @app.route('/getsaleshistogram')
 def getsaleshistogram():
-    
-    bufH = plot_histogram()
+    fileName = session.get('fileName')
+    bufH = plot_histogram('sales2.csv')
     return Response(bufH.read(), content_type='image/png')
 
 @app.route('/getsaleslinechart')
 def getsaleslinechart():
     
     time.sleep(1)
-    bufL = plot_linechart()
+    fileName = session.get('fileName')
+    bufL = plot_linechart('sales2.csv')
     return Response(bufL.read(), content_type='image/png')
 
 @app.route('/getsalesprediction')
@@ -198,8 +202,8 @@ def getsalesprediction():
 
     startdate = request.args.get('startdate')
     enddate = request.args.get('enddate')
-    
-    bufP = predict_sales(startdate, enddate)
+    fileName = session.get('fileName')
+    bufP = predict_sales(startdate, enddate, 'sales2.csv')
     return Response(bufP.read(), content_type='image/png')
 
 # create a route to handle POST requests
@@ -222,6 +226,7 @@ def upload_csv():
 
     # save the file to the "uploads" directory
     file.save(os.path.join('uploads', file.filename))
+    session['fileName'] = file.filename
 
     # return a success response
     return jsonify({'message': 'File saved successfully'}), 200

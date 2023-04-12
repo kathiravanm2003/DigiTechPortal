@@ -30,10 +30,9 @@ export class UploadComponent implements OnInit {
         this.loading = true;
         this.salesService.uploadFile(this.formData).subscribe(
             {
-                next: (v) => 
-                {
+                next: (v: any) => {
                     console.log(v);
-                    this.alertService.info(v);
+                    this.alertService.info(v.message);
                 },
                 error: (e) => {
                     console.error(e);
