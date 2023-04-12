@@ -1,6 +1,6 @@
 import os
 import io
-from flask import Flask, render_template, request, Response, send_file
+from flask import Flask, render_template, request, Response, send_file, jsonify
 from flask_cors import CORS
 import pandas as pd
 from sklearn.linear_model import LinearRegression
@@ -201,7 +201,30 @@ def getsalesprediction():
     
     bufP = predict_sales(startdate, enddate)
     return Response(bufP.read(), content_type='image/png')
-    
+
+# create a route to handle POST requests
+@app.route('/upload_csv', methods=['POST'])
+def upload_csv():
+    # check if the post request has the file part
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part in the request'}), 400
+
+    # get the file from the request
+    file = request.files['file']
+
+    # check if the file is a CSV file
+    if file.filename.split('.')[-1] != 'csv':
+        return jsonify({'error': 'Only CSV files are allowed'}), 400
+
+    # create a directory called "uploads" if it doesn't exist
+    if not os.path.exists('uploads'):
+        os.makedirs('uploads')
+
+    # save the file to the "uploads" directory
+    file.save(os.path.join('uploads', file.filename))
+
+    # return a success response
+    return jsonify({'message': 'File saved successfully'}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)

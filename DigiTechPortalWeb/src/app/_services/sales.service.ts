@@ -24,7 +24,7 @@ export class SalesService {
     }
 
     uploadFile(formData: FormData) {
-        return this.http.post(`${this.flaskAPI}/upload`, formData);
+        return this.http.post(`${this.flaskAPI}/upload_csv`, formData);
     }
 
     getSales() {

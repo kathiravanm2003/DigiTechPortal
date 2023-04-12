@@ -3,7 +3,7 @@ import { first } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import { SalesService } from '@app/_services';
+import { AlertService, SalesService } from '@app/_services';
 
 @Component({ templateUrl: 'upload.component.html' })
 export class UploadComponent implements OnInit {
@@ -11,7 +11,9 @@ export class UploadComponent implements OnInit {
     loading = false;
     formData: FormData;
 
-    constructor(private salesService: SalesService) {
+    constructor(
+        private salesService: SalesService,
+        private alertService: AlertService) {
         this.formData = new FormData();
     }
 
@@ -28,11 +30,20 @@ export class UploadComponent implements OnInit {
         this.loading = true;
         this.salesService.uploadFile(this.formData).subscribe(
             {
-                next: (v) => console.log(v),
-                error: (e) => console.error(e),
+                next: (v) => 
+                {
+                    console.log(v);
+                    this.alertService.info(v);
+                },
+                error: (e) => {
+                    console.error(e);
+                    this.alertService.error(e.error);
+                    this.loading = false;
+                },
                 complete: () => console.info('complete')
             }
         );
+
         this.loading = false;
     }
 }
