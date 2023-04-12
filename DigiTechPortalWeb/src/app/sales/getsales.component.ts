@@ -1,7 +1,7 @@
 ﻿import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 import * as $ from 'jquery';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { SalesService } from '@app/_services';
 import { SalesModel } from './sales.model';
@@ -11,9 +11,9 @@ export class GetSalesComponent implements OnInit {
 
     sales?: SalesModel[];
     salesC?: SalesModel[];
-    histogramUrl?: any;
-    linechartUrl?: any;
-    salespredictUrl?: any;
+    histogramUrl?: SafeUrl;
+    linechartUrl?: SafeUrl;
+    salespredictUrl?: SafeUrl;
     loading = false;
 
     startDate: Date;

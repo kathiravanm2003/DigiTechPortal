@@ -24,10 +24,7 @@ export class SalesService {
     }
 
     uploadFile(formData: FormData) {
-        this.http.post(`${this.flaskAPI}/upload`, formData).subscribe(
-            (response) => console.log(response),
-            (error) => console.log(error)
-        );
+        return this.http.post(`${this.flaskAPI}/upload`, formData);
     }
 
     getSales() {

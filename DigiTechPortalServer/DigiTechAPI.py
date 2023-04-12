@@ -70,8 +70,8 @@ def predict_sales(start_dt, end_dt) :
 
     # Plot the actual and predicted sales values
     plt.plot(test['Date'], y_test, label='Actual')
-    plt.plot(test['Date'], y_pred, label='Predicted')
-    plt.plot(months_2023, y_2023, label='Predicted 2023')
+    plt.plot(test['Date'], y_pred, label='Predicted (Test Sample)')
+    plt.plot(months_2023, y_2023, label='Predicted (Input Range)')
     plt.xlabel('Date')
     plt.ylabel('Sales')
     plt.legend()
@@ -150,21 +150,12 @@ def plot_linechart():
 
 @app.route('/')
 def home():
-    return "Hello, World!"
+    # return "Hello, DigiTech Portal!"
+    return Response("Hello, DigiTech Portal!", content_type='text/plain')
 
 @app.route('/about')
 def about():
-    return "This is a sample Flask web application."
-
-@app.route('/contact', methods=['GET', 'POST'])
-def contact():
-    if request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
-        message = request.form['message']
-        # Process the form data here...
-        return f'Thank you {name} for your message!'
-    return render_template('contact.html')
+    return Response("This is a simple Flask web application for Sales Analysis", content_type='text/plain')
 
 @app.route('/getsales')
 def getsales():
@@ -172,7 +163,7 @@ def getsales():
     # 1. Loading the data    
     # Load the data from a CSV file
     sales_data = pd.read_csv('./content/sales2.csv')
-    return sales_data.to_json(orient='records')
+    return Response(sales_data.to_json(orient='records'), content_type='application/json')
 
 @app.route('/getcleansales')
 def getcleansales():
@@ -185,7 +176,7 @@ def getcleansales():
     # Dealing with outliers
     sales_data = sales_data[(sales_data['Sales'] > 0) & (sales_data['Sales'] < 5000)]
 
-    return sales_data.to_json(orient='records')
+    return Response(sales_data.to_json(orient='records'), content_type='application/json')
 
 @app.route('/getsaleshistogram')
 def getsaleshistogram():

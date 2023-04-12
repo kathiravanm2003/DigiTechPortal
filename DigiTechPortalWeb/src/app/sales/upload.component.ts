@@ -13,20 +13,26 @@ export class UploadComponent implements OnInit {
 
     constructor(private salesService: SalesService) {
         this.formData = new FormData();
-     }
+    }
 
     ngOnInit() {
 
     }
 
     onFileSelected(event: any) {
-        const file: File = event.target.files[0];        
-        this.formData.append('file', file, file.name);        
+        const file: File = event.target.files[0];
+        this.formData.append('file', file, file.name);
     }
 
-    onSubmit(){
+    onSubmit() {
         this.loading = true;
-        this.salesService.uploadFile(this.formData);
+        this.salesService.uploadFile(this.formData).subscribe(
+            {
+                next: (v) => console.log(v),
+                error: (e) => console.error(e),
+                complete: () => console.info('complete')
+            }
+        );
         this.loading = false;
     }
 }
