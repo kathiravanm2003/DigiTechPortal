@@ -19,7 +19,7 @@ def predict_sales(start_dt, end_dt, fileName) :
     # 6. Sales Prediction
 
     # Load data from CSV file
-    sales_data = pd.read_csv('./uploads/' + str(fileName))
+    sales_data = pd.read_csv('./uploads/' + fileName)
 
     # Convert the date column to datetime format
     sales_data['Date'] = pd.to_datetime(sales_data['Date'])
@@ -95,7 +95,7 @@ def predict_sales(start_dt, end_dt, fileName) :
 def plot_histogram(fileName):
 
     # 2. Data cleaning and pre-processing:
-    sales_data = pd.read_csv('./uploads/' + str(fileName))
+    sales_data = pd.read_csv('./uploads/' + fileName)
     # Handling missing values
     sales_data = sales_data.dropna()
 
@@ -121,7 +121,7 @@ def plot_histogram(fileName):
 
 def plot_linechart(fileName):
     # 2. Data cleaning and pre-processing:
-    sales_data = pd.read_csv('./uploads/' + str(fileName))
+    sales_data = pd.read_csv('./uploads/' + fileName)
     # Handling missing values
     sales_data = sales_data.dropna()
 
@@ -175,10 +175,8 @@ def getcleansales():
     sales_data = pd.read_csv('./uploads/' + 'sales2.csv')
     # Handling missing values
     sales_data = sales_data.dropna()
-
     # Dealing with outliers
     sales_data = sales_data[(sales_data['Sales'] > 0) & (sales_data['Sales'] < 5000)]
-
     return Response(sales_data.to_json(orient='records'), content_type='application/json')
 
 @app.route('/getsaleshistogram')
@@ -199,7 +197,6 @@ def getsaleslinechart():
 def getsalesprediction():
     
     time.sleep(2)
-
     startdate = request.args.get('startdate')
     enddate = request.args.get('enddate')
     fileName = session.get('fileName')
