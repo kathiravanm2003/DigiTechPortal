@@ -15,7 +15,6 @@ export class GetSalesComponent implements OnInit {
     linechartUrl?: SafeUrl;
     salespredictUrl?: SafeUrl;
     loading = false;
-
     startDate: Date;
     endDate: Date;
 
